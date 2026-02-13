@@ -11,6 +11,7 @@ const NAV_KEYS = [
   { href: '#experience', key: 'experience' as const },
   { href: '#education', key: 'education' as const },
   { href: '#certifications', key: 'certifications' as const },
+  { href: '#gallery', key: 'gallery' as const },
   { href: '#contact', key: 'contact' as const },
 ]
 

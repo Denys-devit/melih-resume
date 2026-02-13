@@ -6,6 +6,7 @@ import Experience from './sections/Experience'
 import Education from './sections/Education'
 import Certifications from './sections/Certifications'
 import Languages from './sections/Languages'
+import Gallery from './sections/Gallery'
 import Contact from './sections/Contact'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Experience />
       <Education />
       <Certifications />
+      <Gallery />
       <Languages />
       <Contact />
     </main>

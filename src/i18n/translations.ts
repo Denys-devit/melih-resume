@@ -8,6 +8,7 @@ export const translations = {
       experience: 'Experience',
       education: 'Education',
       certifications: 'Certifications',
+      gallery: 'Gallery',
       contact: 'Contact',
       downloadCv: 'Download CV',
     },
@@ -112,6 +113,12 @@ export const translations = {
         { lang: 'German', level: 'Beginner (A1)' },
       ],
     },
+    gallery: {
+      title: 'Event Gallery',
+      hint: 'Drag to reorder · Click to enlarge',
+      viewFull: 'View full size',
+      close: 'Close',
+    },
     contact: {
       title: 'Get in Touch',
       location: 'Eskişehir, Türkiye · Open to Relocation',
@@ -125,6 +132,7 @@ export const translations = {
       experience: 'Deneyim',
       education: 'Eğitim',
       certifications: 'Sertifikalar',
+      gallery: 'Galeri',
       contact: 'İletişim',
       downloadCv: 'CV İndir',
     },
@@ -229,6 +237,12 @@ export const translations = {
         { lang: 'İngilizce', level: 'Üst-Orta Seviye (B2)' },
         { lang: 'Almanca', level: 'Başlangıç (A1)' },
       ],
+    },
+    gallery: {
+      title: 'Etkinlik Galerisi',
+      hint: 'Sıralamak için sürükleyin · Büyütmek için tıklayın',
+      viewFull: 'Tam boyutta görüntüle',
+      close: 'Kapat',
     },
     contact: {
       title: 'İletişime Geç',
