@@ -2,15 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function(){
+        var t=localStorage.getItem('melih-theme');
+        if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+        document.documentElement.setAttribute('data-theme',t);
+        var l=localStorage.getItem('melih-locale');
+        if(l==='tr'||l==='en')document.documentElement.lang=l;
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/melih-resume/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#faf8f5" id="theme-color-meta" />
     <meta name="description" content="Melih Değirmenci - HR Professional | Recruitment, Onboarding, HR Operations" />
     <title>Melih Değirmenci | HR Professional</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/melih-resume/assets/index-DVGRRaxA.js"></script>
-    <link rel="stylesheet" crossorigin href="/melih-resume/assets/index-CJUhW3Ab.css">
+    <script type="module" crossorigin src="/melih-resume/assets/index-B-TnmKlN.js"></script>
+    <link rel="stylesheet" crossorigin href="/melih-resume/assets/index-Obpo1KDR.css">
   </head>
   <body>
     <div id="root"></div>
