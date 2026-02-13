@@ -1,17 +1,19 @@
 import Section from '../components/Section'
+import { useLanguage } from '../contexts/LanguageContext'
 
-const Education = () => (
-  <Section id="education">
-    <h2>Education</h2>
-    <div className="education__card">
-      <h3>Adnan Menderes University — Söke Faculty of Business</h3>
-      <p className="education__degree">B.A. in Human Resources Management · GPA: 3.0</p>
-      <p className="education__courses">
-        Relevant Coursework: HRM, HR Planning, Leadership, Recruitment & Selection, Performance Management,
-        Training & Development, Labor Law, Job Evaluation & Compensation
-      </p>
-    </div>
-  </Section>
-)
+const Education = () => {
+  const { t } = useLanguage()
+
+  return (
+    <Section id="education">
+      <h2>{t.education.title}</h2>
+      <div className="education__card">
+        <h3>{t.education.school}</h3>
+        <p className="education__degree">{t.education.degree}</p>
+        <p className="education__courses">{t.education.courses}</p>
+      </div>
+    </Section>
+  )
+}
 
 export default Education
