@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import Section from '../components/Section'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -26,11 +27,14 @@ const BASE = `${import.meta.env.BASE_URL}images/`
 
 const isVideo = (filename: string) => /\.(mp4|webm|ogg)$/i.test(filename)
 
+const SWIPE_THRESHOLD = 50
+
 const Gallery = () => {
   const { t } = useLanguage()
   const [items, setItems] = useState<string[]>(() => MEDIA_FILES)
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
+  const touchStartX = useRef<number>(0)
 
   const handleDragStart = useCallback((index: number) => {
     setDraggedIndex(index)
@@ -59,9 +63,41 @@ const Gallery = () => {
   }, [])
 
   useEffect(() => {
-    document.body.classList.toggle('gallery-lightbox-open', !!lightboxSrc)
+    document.body.classList.toggle('gallery-lightbox-open', lightboxIndex !== null)
     return () => document.body.classList.remove('gallery-lightbox-open')
-  }, [lightboxSrc])
+  }, [lightboxIndex])
+
+  const goPrev = useCallback(() => {
+    setLightboxIndex((i) => (i !== null && i > 0 ? i - 1 : i))
+  }, [])
+
+  const goNext = useCallback(() => {
+    setLightboxIndex((i) => (i !== null && i < items.length - 1 ? i + 1 : i))
+  }, [items.length])
+
+  useEffect(() => {
+    if (lightboxIndex === null) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') goPrev()
+      else if (e.key === 'ArrowRight') goNext()
+      else if (e.key === 'Escape') setLightboxIndex(null)
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [lightboxIndex, goPrev, goNext])
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }, [])
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const delta = touchStartX.current - e.changedTouches[0].clientX
+      if (delta > SWIPE_THRESHOLD) goNext()
+      else if (delta < -SWIPE_THRESHOLD) goPrev()
+    },
+    [goPrev, goNext]
+  )
 
   return (
     <Section id="gallery">
@@ -81,7 +117,7 @@ const Gallery = () => {
             <button
               type="button"
               className="gallery__thumb"
-              onClick={() => setLightboxSrc(BASE + filename)}
+              onClick={() => setLightboxIndex(index)}
               aria-label={t.gallery.viewFull}
             >
               {isVideo(filename) ? (
@@ -95,38 +131,68 @@ const Gallery = () => {
         ))}
       </div>
 
-      {lightboxSrc && (
+      {lightboxIndex !== null && (
         <div
           className="gallery__lightbox"
           role="dialog"
           aria-modal="true"
           aria-label={t.gallery.viewFull}
-          onClick={() => setLightboxSrc(null)}
+          onClick={() => setLightboxIndex(null)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <button
             type="button"
             className="gallery__lightbox-close"
-            onClick={() => setLightboxSrc(null)}
+            onClick={() => setLightboxIndex(null)}
             aria-label={t.gallery.close}
           >
             ×
           </button>
-          {isVideo(lightboxSrc) ? (
-            <video
-              src={lightboxSrc}
-              controls
-              autoPlay
-              className="gallery__lightbox-video"
-              onClick={(e) => e.stopPropagation()}
-            />
-          ) : (
-            <img
-              src={lightboxSrc}
-              alt=""
-              className="gallery__lightbox-img"
-              onClick={(e) => e.stopPropagation()}
-            />
+          {lightboxIndex > 0 && (
+            <button
+              type="button"
+              className="gallery__lightbox-prev"
+              onClick={(e) => {
+                e.stopPropagation()
+                goPrev()
+              }}
+              aria-label={t.gallery.prev}
+            >
+              <FiChevronLeft size={32} />
+            </button>
           )}
+          {lightboxIndex < items.length - 1 && (
+            <button
+              type="button"
+              className="gallery__lightbox-next"
+              onClick={(e) => {
+                e.stopPropagation()
+                goNext()
+              }}
+              aria-label={t.gallery.next}
+            >
+              <FiChevronRight size={32} />
+            </button>
+          )}
+          <div className="gallery__lightbox-content" onClick={(e) => e.stopPropagation()}>
+            {isVideo(items[lightboxIndex]) ? (
+              <video
+                key={items[lightboxIndex]}
+                src={BASE + items[lightboxIndex]}
+                controls
+                autoPlay
+                className="gallery__lightbox-video"
+              />
+            ) : (
+              <img
+                key={items[lightboxIndex]}
+                src={BASE + items[lightboxIndex]}
+                alt=""
+                className="gallery__lightbox-img"
+              />
+            )}
+          </div>
         </div>
       )}
     </Section>

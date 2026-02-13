@@ -118,6 +118,8 @@ export const translations = {
       hint: 'Drag to reorder · Click to enlarge',
       viewFull: 'View full size',
       close: 'Close',
+      prev: 'Previous',
+      next: 'Next',
     },
     contact: {
       title: 'Get in Touch',
@@ -243,6 +245,8 @@ export const translations = {
       hint: 'Sıralamak için sürükleyin · Büyütmek için tıklayın',
       viewFull: 'Tam boyutta görüntüle',
       close: 'Kapat',
+      prev: 'Önceki',
+      next: 'Sonraki',
     },
     contact: {
       title: 'İletişime Geç',
