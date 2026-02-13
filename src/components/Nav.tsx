@@ -18,7 +18,7 @@ const Nav = () => (
           </li>
         ))}
         <li>
-          <a href="/cv.pdf" download className="nav__cv">Download CV</a>
+          <a href={`${import.meta.env.BASE_URL}cv.pdf`} download className="nav__cv">Download CV</a>
         </li>
       </ul>
     </div>

@@ -16,7 +16,7 @@ const EXPERIENCES = [
     company: 'Hisarlar Machine Factory',
     role: 'Human Resources Intern',
     period: 'Jul 2024 – Aug 2024',
-    image: '/images/hero.jpg',
+    image: `${import.meta.env.BASE_URL}images/hero.jpg`,
     points: [
       'Organized and updated 60+ personnel files, ensuring documentation completeness and proper archiving',
       'Supported recruitment administration through candidate follow-ups, scheduling coordination, and document preparation',
